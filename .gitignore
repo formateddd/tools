@@ -92,7 +92,6 @@ ENV/
 .idea/*
 .DS_Store
 .vscode
-settings.yaml
 tmp/*
 test/
 *.sqlite
