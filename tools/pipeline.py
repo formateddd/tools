@@ -20,11 +20,7 @@ logger = dlog(__file__)
 
 def pipe(src, dst=None):
 
-    conn = redis.Redis(
-        host=Setting.redis_ip,
-        port=Setting.redis_port,
-        password=Setting.redis_pass,
-        db=Setting.redis_db)
+    conn = redis.Redis(host=Setting.redis_ip, port=Setting.redis_port, password=Setting.redis_pass, db=Setting.redis_db)
 
     src_q = RedisQueue(src, conn=conn)
     if dst:
@@ -63,8 +59,18 @@ def pipe(src, dst=None):
 
 class ConfigMeta(object):
     def __getattr__(self, key):
-        with open('settings.yaml', 'r') as file:
-            self.con = yaml.load(file)
+        try:
+            with open('settings.yaml', 'r') as file:
+                self.con = yaml.load(file)
+        except:
+            warning_info = 'using default param , please read readme.md file and touch settings.yaml '
+            logger.warning(warning_info)
+            self.con = {}
+            self.con['Cookie'] = ''
+            self.con['time_sleep'] = 2
+            self.con['sleep_min'] = 1
+            self.con['sleep_max'] = 3
+            self.con['queue_timeout'] = 5
         return self.con.get(key)
 
 
