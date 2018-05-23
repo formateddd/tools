@@ -19,6 +19,7 @@ setup(
         'chardet==3.0.4',
         'fnvhash==0.1.0',
         'idna==2.6',
+        'gevent',
         'lxml==4.0.0',
         'peewee==2.10.1',
         'psycopg2==2.7.3.1',
