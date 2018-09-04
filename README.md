@@ -1,7 +1,7 @@
 ### 把常用包安装到python环境（最好是已经建好的虚拟环境）里
 ### 避免在项目文件里引用时出现的路径问题
 ```sh
-pip install git+https://github.com/killmymates/tools
+pip install git+https://github.com/jokernotgod/tools
 ```
 
 ### 新建settings.yaml文件，写入以下内容，设置对应的参数
