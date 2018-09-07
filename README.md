@@ -1,6 +1,7 @@
 ### 把常用包安装到python环境（最好是已经建好的虚拟环境）里
 ### 避免在项目文件里引用时出现的路径问题
 ```sh
+(MacOS) CFLAGS='-std=c99' pip install gevent
 pip install git+https://github.com/jokernotgod/tools
 ```
 
