@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+from gevent import monkey
+monkey.patch_all()
 
 # See details at
 # http://192.168.2.3/jinlong/tools
