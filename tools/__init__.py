@@ -1,17 +1,16 @@
-from gevent import monkey
-monkey.patch_all()
-
-# See details at
-# http://192.168.2.3/jinlong/tools
+# from gevent import monkey
+# monkey.patch_all()
 
 from .crawler import crawler, _filter
 from .dumblog import dlog
 from .pipeline import pipe, _try, multi, Setting
-from .proxy import proxy
 from .redisq import RedisQueue
 
+# if use proxy, cp proxy.py to your file
+# from .proxy import proxy
+
 __author__ = 'jinlong'
-__all__ = ['crawler', '_filter', 'dlog', 'pipe', '_try', 'multi', 'RedisQueue', 'Setting', 'proxy']
+__all__ = ['crawler', '_filter', 'dlog', 'pipe', '_try', 'multi', 'RedisQueue', 'Setting']
 
 # setting.yaml :
 
