@@ -7,7 +7,7 @@ with open('README.md', 'r', encoding='utf8') as file:
 
 setup(
     name='tools',
-    version='0.1',
+    version='1.0',
     description=("some useful tools"),
     long_description=long_description,
     author='jinlong li',
