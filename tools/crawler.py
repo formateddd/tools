@@ -14,12 +14,13 @@ from lxml import etree
 
 from .pipeline import Setting, multi
 from .model import Proxy_IP
-from .dumblog import dlog
-logger = dlog(__file__)
+
+# from .dumblog import dlog
+# logger = dlog(__file__)
 
 
 def crawler(url, r='', pro=None, ua='', method='get', data={}):
-    logger.info(url)
+    print(url)
 
     if ua == 'mobile':
         UA = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'
@@ -53,9 +54,9 @@ def crawler(url, r='', pro=None, ua='', method='get', data={}):
     else:
         response = normal_crawler(item)
 
-    if type(response) is str or response.status_code != 200:
+    if isinstance(response, str) or response.status_code != 200:
         time.sleep(int(Setting.sleep_max))
-        logger.info('return error : %s' % item.get('url'))
+        print('return error : %s' % item.get('url'))
         return
         # return crawler(url, r, pro)
 
@@ -71,11 +72,11 @@ def crawler(url, r='', pro=None, ua='', method='get', data={}):
 
 
 def proxy_crawler(item):
-    # logger.info(item)
+    # print(item)
     try:
         proxyip = Proxy_IP.select().where(Proxy_IP.status == '1').order_by(fn.random()).get()
     except Exception as err:
-        logger.info(err)
+        print(err)
         return crawler(item.get('url'), item.get('r'))
     proxies = {
         proxyip.http_s.strip(): proxyip.http_s + '://' + proxyip.ip.strip(),
@@ -83,28 +84,37 @@ def proxy_crawler(item):
 
     try:
         response = item.get('req')(
-            item.get('url'), headers=item.get('headers'), data=item.get('data'), timeout=20, proxies=proxies)
+            item.get('url'),
+            headers=item.get('headers'),
+            data=item.get('data'),
+            timeout=20,
+            proxies=proxies)
     except Exception as err:
         multi(update_ip, proxyip)
         # update_ip(proxyip)
         return proxy_crawler(item)
-    logger.info('proxies ip: %s, status_code: %s' % (proxyip.ip, response.status_code))
+    print(
+        'proxies ip: %s, status_code: %s' % (proxyip.ip, response.status_code))
     time.sleep(0.3)
     return response
 
 
 def normal_crawler(item):
     try:
-        response = item.get('req')(item.get('url'), headers=item.get('headers'), data=item.get('data'), timeout=15)
+        response = item.get('req')(
+            item.get('url'),
+            headers=item.get('headers'),
+            data=item.get('data'),
+            timeout=15)
     except Exception as err:
-        logger.info(err)
+        print(err)
         time.sleep(300)
         return item.get('url')
-    logger.info('status_code : %s' % response.status_code)
+    print('status_code : %s' % response.status_code)
     time.sleep(random.randint(int(Setting.sleep_min), int(Setting.sleep_max)))
     if response.status_code != 200:
         time.sleep(int(Setting.sleep_max))
-        logger.info('return error : %s' % item.get('url'))
+        print('return error : %s' % item.get('url'))
         return item.get('url')
     else:
         return response
@@ -115,7 +125,7 @@ def get_proxy_ip():
         proxyip = Proxy_IP.select().where(Proxy_IP.status == '1').order_by(fn.random()).get()
         return proxyip
     except Exception as err:
-        logger.info(err)
+        print(err)
         return
 
 
@@ -134,7 +144,7 @@ def update_ip(proxyip):
         q.execute()
         print('proxy update success %s' % str(proxyip.ip))
     except Exception as err:
-        logger.info(err)
+        print(err)
 
 
 def _filter(lis, word=''):

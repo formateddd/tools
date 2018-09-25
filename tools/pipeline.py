@@ -14,8 +14,8 @@ import yaml
 # monkey.patch_all()
 
 from .redisq import RedisQueue
-from .dumblog import dlog
-logger = dlog(__file__)
+# from .dumblog import dlog
+# logger = dlog(__file__)
 
 
 def pipe(src, dst=None):
@@ -34,13 +34,13 @@ def pipe(src, dst=None):
                 try:
                     kwargs['param'] = src_q.get(timeout=Setting.queue_timeout)
                 except Exception as err:
-                    logger.info(err)
+                    print(err)
                     raise Exception('Get element from redis %s timeout!' % src_q.key)
                 try:
                     ret = func(*args, **kwargs)
                 except Exception as err:
                     src_q.put(kwargs['param'])
-                    logger.info(err)
+                    print(err)
                     # raise Exception(err)
                 if dst:
                     if isinstance(ret, list):
@@ -62,9 +62,9 @@ class ConfigMeta(object):
         try:
             with open('settings.yaml', 'r') as file:
                 self.con = yaml.load(file)
-        except:
+        except BaseException:
             warning_info = 'using default param , please read readme.md file and touch settings.yaml '
-            logger.warning(warning_info)
+            print(warning_info)
             self.con = {}
             self.con['Cookie'] = ''
             self.con['time_sleep'] = 2
@@ -83,7 +83,7 @@ def _try(func):
         try:
             return func(*args, **kw)
         except Exception as err:
-            logger.info(err)
+            print(err)
 
     return wrapper
 
@@ -93,7 +93,7 @@ def multi(func, *_args):
     p.start()
     import time
     time.sleep(Setting.time_sleep)
-    logger.info('process start ! func :: %s, args :: %s' % (func.__name__, _args))
+    print('process start ! func :: %s, args :: %s' % (func.__name__, _args))
 
 
 # def _gevent(func, *_args=None):
