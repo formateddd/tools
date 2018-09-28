@@ -24,14 +24,13 @@ def crawler(url, r='', pro=None, ua='', method='get', data={}):
 
     if ua == 'mobile':
         UA = 'Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36'
-    elif :
-        if Setting.ua == '':
-            print('using default User Agent')
+    else:
+        if Setting.ua is None:
+            print('using default User Agent, please write ua to setting.yaml')
             # UA = UserAgent(verify_ssl=False).random
             UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36'
         else:
             UA = Setting.ua
-
 
     headers = {
         'Cookie': Setting.Cookie,
