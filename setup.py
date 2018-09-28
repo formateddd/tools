@@ -4,10 +4,11 @@ from setuptools import setup
 # Get the long description from the README file
 with open('README.md', 'r', encoding='utf8') as file:
     long_description = file.read()
+version = '1.1'
 
 setup(
     name='tools',
-    version='1.0',
+    version=version,
     description=("some useful tools"),
     long_description=long_description,
     author='jinlong li',
@@ -25,11 +26,11 @@ setup(
         'html2text',
         'tomd',
         'requests',
-        #'gevent',
-        #'psycopg2',
-        #'selenium>=3.7.0',
-        #'parsel>=1.2.0',
-        #'tldextract>=2.1.0'
+        # 'gevent',
+        # 'psycopg2',
+        # 'selenium>=3.7.0',
+        # 'parsel>=1.2.0',
+        # 'tldextract>=2.1.0'
     ),
     license='MIT',
     zip_safe=False,
