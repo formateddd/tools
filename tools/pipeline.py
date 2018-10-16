@@ -18,9 +18,29 @@ from .redisq import RedisQueue
 # logger = dlog(__file__)
 
 
-def pipe(src, dst=None):
+class ConfigMeta(object):
+    def __getattr__(self, key):
+        try:
+            with open('settings.yaml', 'r') as file:
+                self.con = yaml.load(file)
+        except BaseException:
+            warning_info = 'using default param , please read readme.md file and touch settings.yaml '
+            print(warning_info)
+            self.con = {}
+            self.con['Cookie'] = ''
+            self.con['time_sleep'] = 2
+            self.con['sleep_min'] = 1
+            self.con['sleep_max'] = 3
+            self.con['queue_timeout'] = 5
+        return self.con.get(key)
 
-    conn = redis.Redis(host=Setting.redis_ip, port=Setting.redis_port, password=Setting.redis_pass, db=Setting.redis_db)
+
+Setting = ConfigMeta()
+
+
+def pipe(src, dst=None, db=Setting.redis_db):
+
+    conn = redis.Redis(host=Setting.redis_ip, port=Setting.redis_port, password=Setting.redis_pass, db=db)
 
     src_q = RedisQueue(src, conn=conn)
     if dst:
@@ -55,26 +75,6 @@ def pipe(src, dst=None):
         return inner
 
     return outer
-
-
-class ConfigMeta(object):
-    def __getattr__(self, key):
-        try:
-            with open('settings.yaml', 'r') as file:
-                self.con = yaml.load(file)
-        except BaseException:
-            warning_info = 'using default param , please read readme.md file and touch settings.yaml '
-            print(warning_info)
-            self.con = {}
-            self.con['Cookie'] = ''
-            self.con['time_sleep'] = 2
-            self.con['sleep_min'] = 1
-            self.con['sleep_max'] = 3
-            self.con['queue_timeout'] = 5
-        return self.con.get(key)
-
-
-Setting = ConfigMeta()
 
 
 def _try(func):
