@@ -1,0 +1,21 @@
+ua : 
+
+Cookie : 
+
+time_sleep : 2
+
+sleep_min : 1
+sleep_max : 5
+
+pg_db : 
+pg_host : 127.0.0.1
+pg_port : 5432
+pg_user : 
+pg_passwd : 
+
+redis_ip: 127.0.0.1
+redis_port: 6379
+redis_pass: 
+redis_db: 1
+
+queue_timeout: 5

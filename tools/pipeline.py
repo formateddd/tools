@@ -24,7 +24,7 @@ class ConfigMeta(object):
             with open('settings.yaml', 'r') as file:
                 self.con = yaml.load(file)
         except BaseException:
-            warning_info = 'using default param , please read readme.md file and touch settings.yaml '
+            warning_info = 'using default param , please read readme.md and touch settings.yaml '
             print(warning_info)
             self.con = {}
             self.con['Cookie'] = ''
@@ -32,6 +32,10 @@ class ConfigMeta(object):
             self.con['sleep_min'] = 1
             self.con['sleep_max'] = 3
             self.con['queue_timeout'] = 5
+            self.con['redis_ip'] = '127.0.0.1'
+            self.con['redis_port'] = 6379
+            self.con['redis_pass'] = ''
+            self.con['redis_db'] = 1
         return self.con.get(key)
 
 

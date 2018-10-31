@@ -6,10 +6,15 @@ import redis
 
 
 class RedisQueue(object):
-    def __init__(self, name, namespace='queue', conn=None, **redis_kwargs):
+    def __init__(self, name, conn=None, **redis_kwargs):
         """The default connection parameters are: host='localhost', port=6379, db=0"""
         self.__db = conn or redis.Redis(**redis_kwargs)
-        self.key = '%s:%s' % (namespace, name)
+        self.key = '%s' % name
+
+    # def __init__(self, name, namespace='queue', conn=None, **redis_kwargs):
+    #     """The default connection parameters are: host='localhost', port=6379, db=0"""
+    #     self.__db = conn or redis.Redis(**redis_kwargs)
+    #     self.key = '%s:%s' % (namespace, name)
 
     def qsize(self):
         return self.__db.llen(self.key)

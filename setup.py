@@ -4,7 +4,7 @@ from setuptools import setup
 # Get the long description from the README file
 with open('README.md', 'r', encoding='utf8') as file:
     long_description = file.read()
-version = '1.1.3'
+version = '2.1'
 
 setup(
     name='tools',
@@ -13,7 +13,7 @@ setup(
     long_description=long_description,
     author='jinlong li',
     author_email='zxc76229@163.com',
-    url='https://gitlab.com/killmymates/tools',
+    Home_page='https://github.com/formateddd/tools',
     packages=('tools', ),
     install_requires=(
         'fnvhash',
