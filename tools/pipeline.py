@@ -4,9 +4,9 @@
 import functools
 import sys
 sys.path.append('..')
-import multiprocessing
 from functools import wraps
 
+import threading
 import redis
 import yaml
 # import gevent
@@ -14,6 +14,7 @@ import yaml
 # monkey.patch_all()
 
 from .redisq import RedisQueue
+
 # from .dumblog import dlog
 # logger = dlog(__file__)
 
@@ -92,12 +93,18 @@ def _try(func):
     return wrapper
 
 
-def multi(func, *_args):
-    p = multiprocessing.Process(target=func, args=_args)
-    p.start()
-    import time
-    time.sleep(Setting.time_sleep)
-    print('process start ! func :: %s, args :: %s' % (func.__name__, _args))
+# import multiprocessing
+# def multi(func, *_args):
+#     p = multiprocessing.Process(target=func, args=_args)
+#     p.start()
+#     import time
+#     time.sleep(Setting.time_sleep)
+#     print('process start ! func :: %s, args :: %s' % (func.__name__, _args))
+
+
+def _threading(func, *args):
+    a = threading.Thread(target=func, args=args)
+    a.start()
 
 
 # def _gevent(func, *_args=None):

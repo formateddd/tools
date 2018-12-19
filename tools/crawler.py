@@ -12,7 +12,7 @@ from lxml import etree
 # from tenacity import retry
 # from fake_useragent import UserAgent
 
-from .pipeline import Setting, multi
+from .pipeline import Setting
 from .model import Proxy_IP
 
 # from .dumblog import dlog
@@ -94,8 +94,7 @@ def proxy_crawler(item):
             timeout=20,
             proxies=proxies)
     except Exception as err:
-        multi(update_ip, proxyip)
-        # update_ip(proxyip)
+        update_ip(proxyip)
         return proxy_crawler(item)
     print(
         'proxies ip: %s, status_code: %s' % (proxyip.ip, response.status_code))

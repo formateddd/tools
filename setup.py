@@ -4,7 +4,7 @@ from setuptools import setup
 # Get the long description from the README file
 with open('README.md', 'r', encoding='utf8') as file:
     long_description = file.read()
-version = '2.1'
+version = '2.2'
 
 setup(
     name='tools',

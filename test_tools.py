@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-from tools import crawler, proxy, _try, multi, RedisQueue, dlog, pipe, Setting
+from tools import crawler, proxy, _try, RedisQueue, dlog, pipe, Setting, _threading
 logger = dlog(__file__)
 
 # crwaler函数接受的参数
@@ -27,6 +27,7 @@ def test_crawler():
     logger.info(rep.status_code)
 
 
+@_try
 def test():
     for i in range(3):
         logger.info(i)
@@ -49,9 +50,19 @@ def get_param(param):
     logger.info(param)
 
 
+def test_main(arg):
+    import time, random
+    t = random.randint(1,5)
+    print(t)
+    time.sleep(t)
+    print('test main', arg)
+
+
 if __name__ == '__main__':
     # test_crawler()
-    # _try(test())
+    # test()
     # multi(proxy)
-    test_redis()
-    get_param()
+    # test_redis()
+    # get_param()
+    for i in range(9):
+        _threading(test_main, i)

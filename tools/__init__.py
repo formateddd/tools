@@ -3,14 +3,14 @@
 
 from .crawler import crawler, _filter
 from .dumblog import dlog
-from .pipeline import pipe, _try, multi, Setting
+from .pipeline import pipe, _try, Setting, _threading
 from .redisq import RedisQueue
 
 # if use proxy, cp proxy.py to your file
 # from .proxy import proxy
 
 __author__ = 'jinlong'
-__all__ = ['crawler', '_filter', 'dlog', 'pipe', '_try', 'multi', 'RedisQueue', 'Setting']
+__all__ = ['crawler', '_filter', 'dlog', 'pipe', '_try', 'RedisQueue', 'Setting', '_threading']
 
 # setting.yaml :
 
